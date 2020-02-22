@@ -7,7 +7,7 @@ categories: R plotting
 
 ```{r setup, include=FALSE }
 knitr::opts_chunk$set(warning=F, message=F)
-knitr::opts_chunk$set(fig.path='blog/assets/img/combining-inset-plots-with-facets-')
+knitr::opts_chunk$set(fig.path='blog/assets/img/combining-inset-plots-with-facets-', dpi=300)
 
 ```
 
