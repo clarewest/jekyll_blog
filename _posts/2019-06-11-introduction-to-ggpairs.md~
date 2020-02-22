@@ -23,7 +23,7 @@ plot(df[,2:4])
 
 ```
 
-![](/blog/assets/img/base_pairs.png)
+![](/assets/img/base_pairs.png)
 
 
 I'm interested in recreating this plot using my visualisation package of choice, ggplot2, and I found the best way to do this is using ggpairs ("Ggplot2 Generalized Pairs Plot"), part of the ggplot2 extension package GGally.
@@ -70,7 +70,7 @@ df %>% select(-Target) %>% ggpairs(., lower = list(continuous = wrap("smooth", a
 
 ```
 
-![](/blog/assets/img/ggpairs_smooth.png)
+![](/assets/img/ggpairs_smooth.png)
 
 It's also possible to provide your own plotting function. 
 
@@ -82,7 +82,7 @@ df %>% ggpairs(.,
                lower = list(continuous = wrap("smooth", alpha = 0.3, size=0.1)))
 ```
 
-![](/blog/assets/img/ggpairs_colour.png)
+![](/assets/img/ggpairs_colour.png)
 
 Notice how we now have facethist and box plots for "combo" (discrete and continuous) combinations of variables in the lower and upper triangles, respectively, and a bar plot showing the total number of models on the Target diagonal. 
 
@@ -99,7 +99,7 @@ df %>% ggpairs(.,
                theme(legend.position = "bottom")  
 ```
 
-![](/blog/assets/img/ggpairs_column.png)
+![](/assets/img/ggpairs_column.png)
 
 Some extra things for my final plot:
 
@@ -120,7 +120,7 @@ df %>% ggpairs(.,
                theme(panel.grid.major = element_blank())    # remove gridlines 
 ```
 
-![](/blog/assets/img/ggpairs_modified.png)
+![](/assets/img/ggpairs_modified.png)
 
 Now my problem is that I'm not interested in that first column. Getting around this is a bit convoluted, but here's my solution.
 
@@ -142,7 +142,7 @@ p <- df %>% ggpairs(.,
 getPlot(p, 1, 4) + guides(fill=FALSE)
 ```
 
-![](/blog/assets/img/ggpairs_panel.png)
+![](/assets/img/ggpairs_panel.png)
 
 
 So if I extract the panels I'm interested in, I can then display them using ggmatrix
@@ -161,7 +161,7 @@ ggmatrix(plots,
 
 ```
 
-![](/blog/assets/img/ggpairs_final.png)
+![](/assets/img/ggpairs_final.png)
 
 ~~Sidenote: If you know how to iterate over i and j at once in apply (and end up with a list) please share your secrets with me.~~
 
