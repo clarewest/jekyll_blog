@@ -200,3 +200,5 @@ main_plot +
 ```
 
 ![](/blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-9-1.png)<!-- -->
+
+*This blog post was originally posted on the [OPIG blog](https://www.blopig.com/blog/https://www.blopig.com/blog/2019/08/combining-inset-plots-with-facets-using-ggplot2/).*
