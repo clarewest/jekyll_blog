@@ -69,7 +69,7 @@ main_plot <-
 main_plot
 ```
 
-![](/blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-3-1.png)<!-- -->
+![](blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-3-1.png)<!-- -->
 
 It looks like Nobel prize winners are getting older for all categories
 other than Peace, which may be reassuring for those of us who are yet to
@@ -114,7 +114,7 @@ main_plot +
                       ymin = -8, ymax=34, xmin=1955, xmax=2015)
 ```
 
-![](/blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-5-1.png)<!-- -->
+![](blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-5-1.png)<!-- -->
 
 `ymin`, `ymax`, `xmin` and `xmax` define where the inset (the grob) will
 be placed. This of course needs tweaking to find the right spot to avoid
@@ -151,7 +151,7 @@ main_plot +
                       ymin = -8, ymax=34, xmin=1955, xmax=2015)
 ```
 
-![](/blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-7-1.png)<!-- -->
+![](blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-7-1.png)<!-- -->
 
 To do this for all the facets, I’ll use `split()` to divide the
 dataframe into categories, and `map()` from the [`purrr`
@@ -176,7 +176,7 @@ insets <- plot_data %>%
 main_plot + insets
 ```
 
-![](/blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-8-1.png)<!-- -->
+![](blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-8-1.png)<!-- -->
 
 We can now draw the groundbreaking conclusion that when it comes to
 Nobel glory, Literature is a more solitary field than Medicine.
@@ -199,4 +199,4 @@ main_plot +
                            size=2, force=10, nudge_y = 45, segment.size=0.15)
 ```
 
-![](/blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-9-1.png)<!-- -->
+![](blog/assets/img/combining-inset-plots-with-facets-unnamed-chunk-9-1.png)<!-- -->
