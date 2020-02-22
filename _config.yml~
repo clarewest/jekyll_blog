@@ -41,7 +41,7 @@ plugins:
 # their entries' file path in the `include:` list.
 #
 exclude:
-  - *.Rmd
+  - "*.Rmd"
 #   - .sass-cache/
 #   - .jekyll-cache/
 #   - gemfiles/
