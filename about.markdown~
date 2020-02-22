@@ -4,15 +4,6 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+I am a Postdoctoral Informatics Scientist at the [Structural Genomics Consortium](https://www.thesgc.org/scientists/groups/oxford), University of Oxford working with the knowledge-exchange network [UK SPINE](https://www.kespine.org.uk/about/university-oxford), and a Visiting Scientist at [EMBL-EBI] with [Open Targets](https://www.opentargets.org/). In my research we aim to identify potential drug targets for age-related morbidities.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+To read more about me, see my [homepage](https://clarewest.github.io/). 
