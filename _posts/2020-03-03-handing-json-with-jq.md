@@ -48,6 +48,7 @@ clare$ curl --request GET https://www.rcsb.org/pdb/json/describeMol?structureId=
 We can retrive the values of keys that we care about using '.field', which produces the value at the key 'field', or null if there is no value present:
 
 ```console
+clare$ curl --request GET https://www.rcsb.org/pdb/json/describeMol?structureId=1cew > test.json
 clare$ cat test.json | jq '.id'
 "1CEW"
 clare$ cat test.json | jq '.name'
@@ -57,7 +58,6 @@ null
 We can also filter for particular fields that we care about, outputting in JSON format:
 
 ```console
-clare$ curl --request GET https://www.rcsb.org/pdb/json/describeMol?structureId=1cew> test.json
 clare$ cat test.json | jq '{id}'
 {
   "id": "1CEW"
@@ -77,10 +77,10 @@ clare$ cat test.json | jq '.polymerDescriptions[].length'
 ```
 
 You can index or slice arrays, for example:  
-`.[0]` -- first element in the array
-`.[2]` -- third element in the array
-`.[-1] -- last element
-`.[1-5]` -- second to fifth elements
+- `.[0]` -- first element in the array
+- `.[2]` -- third element in the array
+- `.[-1]` -- last element
+- `.[1-5]` -- second to fifth elements
 
 For example, the result of our API request is only one JSON object, if it was many we could use `jq '.[0]'` to only get the first.  
 
