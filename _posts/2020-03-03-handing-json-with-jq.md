@@ -98,6 +98,13 @@ clare$ cat test.json | jq '{id, protein: "Chicken egg white cystatin", chain: .p
   "length": "108"
 }
 ```
+
+Maybe you want to extract all the objects from a large JSON file with a particular field value:
+
+```console
+clare$ jq 'select(.thing=="thingofinterest")' large.json
+```
+
 If you're saving to a file, you may prefer to use the option `--compact-output`/`-c` to generate a more compact output in which each JSON object is on a single line. 
 
 See the [jq manual](https://stedolan.github.io/jq/manual/) for more information and lots of other cool things you can do!
