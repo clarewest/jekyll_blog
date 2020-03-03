@@ -21,7 +21,7 @@
 title: Clare's Blog
 email: clarebethwest@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Blog description.
+  Data adventures of a former biochemist.
 baseurl: /blog # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: claree_west
