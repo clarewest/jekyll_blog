@@ -14,7 +14,11 @@ data.
 
 ![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)
 
-For this example, I’m going to use [some
+The sets are shown as rows of a matrix at the bottom, with intersections of
+sets indicated by connected filled circles, and the number of corresponding
+elements shown as a bar plot above. 
+
+For this example, I’m using [some
 data](https://github.com/clarewest//blog/blob/master/assets/slams.csv) on
 tennis Grand Slam winners. The data was scraped
 [from](https://en.wikipedia.org/wiki/List_of_Grand_Slam_women%27s_singles_champions)
