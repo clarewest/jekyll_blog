@@ -13,15 +13,15 @@ attractive and intuitive way, with lots of options for exploring the
 data.
 
 For this example, I’m going to use [some
-data](https://github.com/clarewest//blog/blob/master/assets/slams.csv) on
+data](https://github.com/clarewest/blog/blob/master/assets/slams.csv) on
 tennis Grand Slam winners. The data was scraped
 [from](https://en.wikipedia.org/wiki/List_of_Grand_Slam_women%27s_singles_champions)
 [Wikipedia](https://en.wikipedia.org/wiki/List_of_Grand_Slam_mens%27s_singles_champions)
 using [this python
-script](https://github.com/clarewest//blog/blob/master/assets/grand_slam_wikipedia.py).
+script](https://github.com/clarewest/blog/blob/master/assets/grand_slam_wikipedia.py).
 
 ``` r
-t <- read.csv("https://raw.githubusercontent.com/clarewest//blog/master/assets/slams.csv", na.strings = "", stringsAsFactors = FALSE)
+t <- read.csv("https://raw.githubusercontent.com/clarewest/blog/master/assets/slams.csv", na.strings = "", stringsAsFactors = FALSE)
 head(t)
 ```
 
@@ -163,7 +163,7 @@ mat <-
 gplots::venn(mat)
 ```
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-7-1.png)<!-- -->
+![](blog/assets/img/beyond-the-venn-diagramunnamed-chunk-7-1.png)<!-- -->
 
 While Venn diagrams are useful for describing overlaps between sets,
 they are limited in the number of sets they use, and the reliance on
@@ -176,7 +176,7 @@ library(UpSetR)
 upset(t_wide)
 ```
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-8-1.png)<!-- -->
+![](blog/assets/img/beyond-the-venn-diagramunnamed-chunk-8-1.png)<!-- -->
 
 Cool\!
 
@@ -215,7 +215,7 @@ upset(t_wide,
       )
 ```
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-9-1.png)<!-- -->
+![](blog/assets/img/beyond-the-venn-diagramunnamed-chunk-9-1.png)<!-- -->
 
 Which highlights that, interestingly, the French Open and Wimbledon have
 been won by the greatest diversity of players, while the rarest groups
@@ -244,7 +244,7 @@ upset(t_wide,
       )
 ```
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-10-1.png)<!-- -->
+![](blog/assets/img/beyond-the-venn-diagramunnamed-chunk-10-1.png)<!-- -->
 
 Or to highlight the elements that correspond to players on the Womens
 Tour:
@@ -263,7 +263,7 @@ upset(t_wide,
       )
 ```
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-11-1.png)<!-- -->
+![](blog/assets/img/beyond-the-venn-diagramunnamed-chunk-11-1.png)<!-- -->
 
 See [this
 vignette](https://cran.r-project.org/web/packages/UpSetR/vignettes/queries.html)
@@ -289,7 +289,7 @@ upset(t_wide,
       )
 ```
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)<!-- -->
+![](blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)<!-- -->
 
 In addition to these built-in queries, it’s also possible to define your
 own custom queries.
@@ -314,7 +314,7 @@ upset(t_wide,
       )
 ```
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-13-1.png)<!-- -->
+![](blog/assets/img/beyond-the-venn-diagramunnamed-chunk-13-1.png)<!-- -->
 
 And as a reminder, who is the GOAT?
 
@@ -331,4 +331,4 @@ upset(t_wide,
       )
 ```
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-14-1.png)<!-- -->
+![](blog/assets/img/beyond-the-venn-diagramunnamed-chunk-14-1.png)<!-- -->
