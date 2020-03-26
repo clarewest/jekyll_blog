@@ -15,7 +15,12 @@ knitr::opts_chunk$set(fig.path='blog/assets/img/beyond-the-venn-diagram', dpi=30
 ```
 
 ```{r}
-t <- read.csv("https://raw.githubusercontent.com/clarewest/blog/master/assets/slams.csv", na.strings = "", stringsAsFactors = FALSE)
+t <-
+  read.csv(
+    "https://raw.githubusercontent.com/clarewest/blog/master/assets/slams.csv",
+    na.strings = "",
+    stringsAsFactors = FALSE
+  )
 head(t)
 ```
 
@@ -30,7 +35,6 @@ First I'll put it in long format, in which each row is a tournament.
 ```{r}
 library(tidyr)
 library(dplyr) 
-
 t_long <-
   t %>%
   tidyr::pivot_longer(
@@ -69,25 +73,27 @@ Today, I'm interested in how many players have won each combination of Slams. As
 For this, I'm going to reshape it back into wide format, but this time each row will correspond to a player, with a 0 for a tournament they have won, or a 0 for tournaments they haven't, as well as the tour (Mens or Womens) and the total number of slams they have won.
 
 ```{r}
-t_wide <- 
-  t_long %>% 
-  group_by(tour, Winner) %>% 
+t_wide <-
+  t_long %>%
+  group_by(tour, Winner) %>%
   count(Tournament) %>% ## count how many wins at each tournament
   mutate(win = 1,  ## boolean for a win at the tournament
          Total = sum(n)) %>% ## count how many wins overall
-  pivot_wider(c(id_cols = Winner, tour, Total), 
-              names_from = Tournament, 
-              values_from = win, 
-              values_fill = list(win=0)) %>% ## fill empty cells with 0 
+  pivot_wider(
+    c(id_cols = Winner, tour, Total),
+    names_from = Tournament,
+    values_from = win,
+    values_fill = list(win = 0)
+  ) %>% ## fill empty cells with 0
   data.frame()
 
 head(t_wide) 
 ```
 
 ```{r}
-mat <- 
+mat <-
   t_wide %>%
-  dplyr::select(French.Open, Australian.Open, US.Open, Wimbledon) 
+  dplyr::select(French.Open, Australian.Open, US.Open, Wimbledon)
 
 gplots::venn(mat)
 ```
@@ -118,15 +124,16 @@ See [this vingette](https://cran.r-project.org/web/packages/UpSetR/vignettes/bas
 slam_colours = c("#3B8CC8", "#C05830", "#5A3E87", "#F2CE46") ## slam colours (too cute, I know)
 tournaments = c("Australian.Open", "French.Open", "Wimbledon", "US.Open") ## crucial order
 
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = rev(slam_colours), 
-      order.by = "freq", 
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), 
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = rev(slam_colours),
+  order.by = "freq",
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+)
 ```
 
 Which highlights that, interestingly, the French Open and Wimbledon have been won by the greatest diversity of players, while the rarest groups are players that have won only Wimbledon & Australian Open, or all but the US Open.
@@ -141,33 +148,48 @@ For example, to highlight the intersection of all sets, representing players tha
 
 
 ```{r}
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(
-        list(query = intersects, params = list("French.Open","Australian.Open", "US.Open", "Wimbledon"), active = T, query.name = "All Slams", color = "orange"))
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = intersects,
+      params = list("French.Open", "Australian.Open", "US.Open", "Wimbledon"),
+      active = T,
+      query.name = "All Slams",
+      color = "orange"
+    )
+  )
+)
 ```
 
 Or to highlight the elements that correspond to players on the Womens Tour:
 
 ```{r}
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(
-        list(query = elements, params = list("tour", "Womens"), active = T, query.name = "WTA"))
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = elements,
+      params = list("tour", "Womens"),
+      active = T,
+      query.name = "WTA"
+    )
+  )
+)
 
 ```
 
@@ -178,18 +200,25 @@ You can also subset your queries using `expression`.
 Let's highlight all the players that have won 3 total Slams, including Wimbledon and the US Open:
 
 ```{r}
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(
-        list(query = intersects, params = list("US.Open", "Wimbledon"), active = T, query.name = "Sir Andrew Murray")), 
-      expression = "Total == 3"
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = intersects,
+      params = list("US.Open", "Wimbledon"),
+      active = T,
+      query.name = "Sir Andrew Murray"
+    )
+  ),
+  expression = "Total == 3"
+)
 ```
 
 In addition to these built-in queries, it's also possible to define your own custom queries. 
@@ -201,31 +230,49 @@ slams <- function(row, total) {
     data <- (row["Total"] >= total)
 }
 
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(list(query = slams, params = list(10), color = "orange", active = T, query.name = "> 10 Slams"))
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = slams,
+      params = list(10),
+      color = "orange",
+      active = T,
+      query.name = "> 10 Slams"
+    )
+  )
+)
 ```
 
 And as a reminder, who is the GOAT?
 
 ```{r}
 
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(list(query = slams, params = list(max(t_wide$Total)), color = "orange", active = T, query.name = paste0("Serena Williams has won ",max(t_wide$Total)," slams")))
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = slams,
+      params = list(max(t_wide$Total)),
+      color = "orange",
+      active = T,
+      query.name = paste0("Serena Williams has won ", max(t_wide$Total), " slams")
+    )
+  )
+)
 
 ```

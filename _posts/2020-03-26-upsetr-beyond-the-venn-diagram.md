@@ -132,22 +132,24 @@ Today, I’m interested in how many players have won each combination of
 Slams. As there are 4 tournaments, I can just about represent this using
 a Venn diagram.
 
-For this, I’m going to reshape it back into wide format, but this time
-each row will correspond to a player, with a 0 for a tournament they
+First, let's reshape it back into wide format, but this time
+each row will correspond to a player, with a 1 for each tournament they
 have won, or a 0 for tournaments they haven’t, as well as the tour (Mens
 or Womens) and the total number of slams they have won.
 
 ``` r
-t_wide <- 
-  t_long %>% 
-  group_by(tour, Winner) %>% 
+t_wide <-
+  t_long %>%
+  group_by(tour, Winner) %>%
   count(Tournament) %>% ## count how many wins at each tournament
   mutate(win = 1,  ## boolean for a win at the tournament
          Total = sum(n)) %>% ## count how many wins overall
-  pivot_wider(c(id_cols = Winner, tour, Total), 
-              names_from = Tournament, 
-              values_from = win, 
-              values_fill = list(win=0)) %>% ## fill empty cells with 0 
+  pivot_wider(
+    c(id_cols = Winner, tour, Total),
+    names_from = Tournament,
+    values_from = win,
+    values_fill = list(win = 0)
+  ) %>% ## fill empty cells with 0
   data.frame()
 
 head(t_wide) 
@@ -172,7 +174,7 @@ gplots::venn(mat)
 ![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-7-1.png)<!-- -->
 
 While Venn diagrams are useful for describing overlaps between sets,
-they are limited in the number of sets they use, and the reliance on
+they are limited in the number of sets they can show, and the reliance on
 numbers can make patterns tricky to spot.
 
 Alternatively, we can visualise the same thing using an UpSet plot:
@@ -186,12 +188,12 @@ upset(t_wide)
 
 Cool\!
 
-There are many ways to customise this. For example:
+There are many ways to customise this plot. For example:
 
   - `keep.order`: keep the sets the same order rather than reordering by
     total count
   - `sets.bar.color`: change the colour of the bars on the left, which
-    are visualising the number of winners of each Slam
+    represent the total number of elements in each set (Slam winners)
   - `order.by`: reorder the intersection bars by the size (`freq`) or
     group by the sets involved (`sets`) instead of by the degree of
     intersecting sets
@@ -210,15 +212,16 @@ examples.
 slam_colours = c("#3B8CC8", "#C05830", "#5A3E87", "#F2CE46") ## slam colours (too cute, I know)
 tournaments = c("Australian.Open", "French.Open", "Wimbledon", "US.Open") ## crucial order
 
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = rev(slam_colours), 
-      order.by = "freq", 
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), 
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = rev(slam_colours),
+  order.by = "freq",
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+)
 ```
 
 ![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-9-1.png)<!-- -->
@@ -237,17 +240,25 @@ For example, to highlight the intersection of all sets, representing
 players that have won all four Grand Slams:
 
 ``` r
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(
-        list(query = intersects, params = list("French.Open","Australian.Open", "US.Open", "Wimbledon"), active = T, query.name = "All Slams", color = "orange"))
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = intersects,
+      params = list("French.Open", "Australian.Open", "US.Open", "Wimbledon"),
+      active = T,
+      query.name = "All Slams",
+      color = "orange"
+    )
+  )
+)
 ```
 
 ![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-10-1.png)<!-- -->
@@ -256,17 +267,24 @@ Or to highlight the elements that correspond to players on the Womens
 Tour:
 
 ``` r
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(
-        list(query = elements, params = list("tour", "Womens"), active = T, query.name = "WTA"))
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = elements,
+      params = list("tour", "Womens"),
+      active = T,
+      query.name = "WTA"
+    )
+  )
+)
 ```
 
 ![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-11-1.png)<!-- -->
@@ -281,18 +299,25 @@ Let’s highlight all the players that have won 3 total Slams, including
 Wimbledon and the US Open:
 
 ``` r
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(
-        list(query = intersects, params = list("US.Open", "Wimbledon"), active = T, query.name = "Sir Andrew Murray")), 
-      expression = "Total == 3"
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = intersects,
+      params = list("US.Open", "Wimbledon"),
+      active = T,
+      query.name = "Sir Andrew Murray"
+    )
+  ),
+  expression = "Total == 3"
+)
 ```
 
 ![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)<!-- -->
@@ -301,23 +326,32 @@ In addition to these built-in queries, it’s also possible to define your
 own custom queries.
 
 Let’s define a query `slams` that highlights the players who have won
-more than a given number of total Slams
+more than a given number of total Slams:
 
 ``` r
 slams <- function(row, total) {
     data <- (row["Total"] >= total)
 }
 
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(list(query = slams, params = list(10), color = "orange", active = T, query.name = "> 10 Slams"))
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = slams,
+      params = list(10),
+      color = "orange",
+      active = T,
+      query.name = "> 10 Slams"
+    )
+  )
+)
 ```
 
 ![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-13-1.png)<!-- -->
@@ -325,16 +359,25 @@ upset(t_wide,
 And as a reminder, who is the GOAT?
 
 ``` r
-upset(t_wide,
-      sets = tournaments,
-      keep.order = TRUE, 
-      sets.bar.color = slam_colours,
-      text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1), ##
-      mainbar.y.label = "Number of players",
-      sets.x.label = "Total winners",
-      query.legend = "bottom",
-      queries = list(list(query = slams, params = list(max(t_wide$Total)), color = "orange", active = T, query.name = paste0("Serena Williams has won ",max(t_wide$Total)," slams")))
-      )
+upset(
+  t_wide,
+  sets = tournaments,
+  keep.order = TRUE,
+  sets.bar.color = slam_colours,
+  text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
+  mainbar.y.label = "Number of players",
+  sets.x.label = "Total winners",
+  query.legend = "bottom",
+  queries = list(
+    list(
+      query = slams,
+      params = list(max(t_wide$Total)),
+      color = "orange",
+      active = T,
+      query.name = paste0("Serena Williams has won ", max(t_wide$Total), " slams")
+    )
+  )
+)
 ```
 
 ![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-14-1.png)<!-- -->
