@@ -13,7 +13,7 @@ populated. In my research, I find these plots extremely powerful for
 showing large amounts of information in an attractive and intuitive way,
 with lots of options for exploring the data.
 
-![](//blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)
+![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)
 
 The sets are shown as rows of a matrix at the bottom, with intersections
 of sets indicated by connected filled circles, and the number of

@@ -7,18 +7,19 @@ categories: R plotting
 
 [UpSetR](https://cran.r-project.org/web/packages/UpSetR/readme/README.html)
 is a package for visualising the intersections of many more sets than is
-feasible with, for example, Venn diagrams. In my research, I find these
-plots extremely powerful for showing large amounts of information in an
-attractive and intuitive way, with lots of options for exploring the
-data.
+feasible with, for example, Venn diagrams. They are particularly useful
+when there are many sets but the intersections are relatively sparsely
+populated. In my research, I find these plots extremely powerful for
+showing large amounts of information in an attractive and intuitive way,
+with lots of options for exploring the data.
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)
+![](//blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)
 
-The sets are shown as rows of a matrix at the bottom, with intersections of
-sets indicated by connected filled circles, and the number of corresponding
-elements shown as a bar plot above. 
+The sets are shown as rows of a matrix at the bottom, with intersections
+of sets indicated by connected filled circles, and the number of
+corresponding elements shown as a bar plot above.
 
-For this example, I’m using [some
+For this example, I’m going to use [some
 data](https://github.com/clarewest//blog/blob/master/assets/slams.csv) on
 tennis Grand Slam winners. The data was scraped
 [from](https://en.wikipedia.org/wiki/List_of_Grand_Slam_women%27s_singles_champions)
@@ -27,7 +28,12 @@ using [this python
 script](https://github.com/clarewest//blog/blob/master/assets/grand_slam_wikipedia.py).
 
 ``` r
-t <- read.csv("https://raw.githubusercontent.com/clarewest//blog/master/assets/slams.csv", na.strings = "", stringsAsFactors = FALSE)
+t <-
+  read.csv(
+    "https://raw.githubusercontent.com/clarewest//blog/master/assets/slams.csv",
+    na.strings = "",
+    stringsAsFactors = FALSE
+  )
 head(t)
 ```
 
@@ -63,7 +69,6 @@ First I’ll put it in long format, in which each row is a tournament.
 ``` r
 library(tidyr)
 library(dplyr) 
-
 t_long <-
   t %>%
   tidyr::pivot_longer(
@@ -132,10 +137,10 @@ Today, I’m interested in how many players have won each combination of
 Slams. As there are 4 tournaments, I can just about represent this using
 a Venn diagram.
 
-First, let's reshape it back into wide format, but this time
-each row will correspond to a player, with a 1 for each tournament they
-have won, or a 0 for tournaments they haven’t, as well as the tour (Mens
-or Womens) and the total number of slams they have won.
+First, let’s reshape it back into wide format, but this time each row
+will correspond to a player, with a 1 for each tournament they have won,
+or a 0 for tournaments they haven’t, as well as the tour (Mens or
+Womens) and the total number of slams they have won.
 
 ``` r
 t_wide <-
@@ -164,9 +169,9 @@ head(t_wide)
     ## 6     Andy Murray Mens     3           0               0       1         1
 
 ``` r
-mat <- 
+mat <-
   t_wide %>%
-  dplyr::select(French.Open, Australian.Open, US.Open, Wimbledon) 
+  dplyr::select(French.Open, Australian.Open, US.Open, Wimbledon)
 
 gplots::venn(mat)
 ```
@@ -174,7 +179,7 @@ gplots::venn(mat)
 ![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-7-1.png)<!-- -->
 
 While Venn diagrams are useful for describing overlaps between sets,
-they are limited in the number of sets they can show, and the reliance on
+they are limited in the number of sets they show, and the reliance on
 numbers can make patterns tricky to spot.
 
 Alternatively, we can visualise the same thing using an UpSet plot:
@@ -188,7 +193,7 @@ upset(t_wide)
 
 Cool\!
 
-There are many ways to customise this plot. For example:
+There are many ways to customise this. For example:
 
   - `keep.order`: keep the sets the same order rather than reordering by
     total count
@@ -210,13 +215,14 @@ examples.
 
 ``` r
 slam_colours = c("#3B8CC8", "#C05830", "#5A3E87", "#F2CE46") ## slam colours (too cute, I know)
-tournaments = c("Australian.Open", "French.Open", "Wimbledon", "US.Open") ## crucial order
+tournaments = c("Australian.Open", "French.Open", "Wimbledon", "US.Open") %>% ## crucial order
+  rev() ## reversed to be top to bottom
 
 upset(
   t_wide,
   sets = tournaments,
   keep.order = TRUE,
-  sets.bar.color = rev(slam_colours),
+  sets.bar.color = slam_colours,
   order.by = "freq",
   text.scale = c(1.3, 1.3, 1.3, 1, 1.5, 1),
   mainbar.y.label = "Number of players",
@@ -326,7 +332,7 @@ In addition to these built-in queries, it’s also possible to define your
 own custom queries.
 
 Let’s define a query `slams` that highlights the players who have won
-more than a given number of total Slams:
+more than a given number of total Slams
 
 ``` r
 slams <- function(row, total) {
