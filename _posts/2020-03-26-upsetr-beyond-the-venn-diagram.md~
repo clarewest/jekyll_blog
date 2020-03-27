@@ -2,6 +2,7 @@
 title: "UpSetR: Beyond the Venn diagram"
 date: "26/03/2020"
 output: jekyllthat::jekylldown
+image: "/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png"
 categories: R plotting
 ---
 
