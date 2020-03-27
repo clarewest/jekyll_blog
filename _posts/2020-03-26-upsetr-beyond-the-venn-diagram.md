@@ -3,6 +3,7 @@ title: "UpSetR: Beyond the Venn diagram"
 date: "26/03/2020"
 output: jekyllthat::jekylldown
 image: "https://clarewest.github.io/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png"
+summary: "Visualising complex set intersections using UpSetR plots"
 categories: R plotting
 ---
 
