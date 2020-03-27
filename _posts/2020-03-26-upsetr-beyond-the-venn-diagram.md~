@@ -1,8 +1,9 @@
 ---
 title: "UpSetR: Beyond the Venn diagram"
-date: "26/03/2020"
+date: "23/03/2020"
 output: jekyllthat::jekylldown
-image: "https://clarewest.github.io/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png"
+image: "https://clarewest.github.io//blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png"
+summary: "Visualising complex set intersections using UpSetR plots"
 categories: R plotting
 ---
 
@@ -14,7 +15,7 @@ populated. In my research, I find these plots extremely powerful for
 showing large amounts of information in an attractive and intuitive way,
 with lots of options for exploring the data.
 
-![](/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)
+![](//blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png)
 
 The sets are shown as rows of a matrix at the bottom, with intersections
 of sets indicated by connected filled circles, and the number of
@@ -215,7 +216,8 @@ for more
 examples.
 
 ``` r
-slam_colours = c("#3B8CC8", "#C05830", "#5A3E87", "#F2CE46") ## slam colours (too cute, I know)
+slam_colours = c("#3B8CC8", "#C05830", "#5A3E87", "#F2CE46") %>% ## slam colours (too cute, I know)
+  rev()
 tournaments = c("Australian.Open", "French.Open", "Wimbledon", "US.Open") %>% ## crucial order
   rev() ## reversed to be top to bottom
 

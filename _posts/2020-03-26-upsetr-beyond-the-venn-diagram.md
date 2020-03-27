@@ -1,6 +1,6 @@
 ---
 title: "UpSetR: Beyond the Venn diagram"
-date: "26/03/2020"
+date: "23/03/2020"
 output: jekyllthat::jekylldown
 image: "https://clarewest.github.io/blog/assets/img/beyond-the-venn-diagramunnamed-chunk-12-1.png"
 summary: "Visualising complex set intersections using UpSetR plots"
@@ -216,7 +216,8 @@ for more
 examples.
 
 ``` r
-slam_colours = c("#3B8CC8", "#C05830", "#5A3E87", "#F2CE46") ## slam colours (too cute, I know)
+slam_colours = c("#3B8CC8", "#C05830", "#5A3E87", "#F2CE46") %>% ## slam colours (too cute, I know)
+  rev()
 tournaments = c("Australian.Open", "French.Open", "Wimbledon", "US.Open") %>% ## crucial order
   rev() ## reversed to be top to bottom
 
