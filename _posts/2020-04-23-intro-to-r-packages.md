@@ -308,7 +308,7 @@ You can now view the documentation in RStudio as usual using
     > ?say_hello
     Rendering development documentation for 'say_hello'
 
-<img src="/blog/assets/img/intro-to-r-packages_help.png" width="300" />
+<img src="https://clarewest.github.io/blog/assets/img/intro-to-r-packages_help.png" width="300" />
 
 ### Automating tests
 
