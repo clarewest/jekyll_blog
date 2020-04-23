@@ -2,6 +2,7 @@
 title: "Packaging Your R Code"
 date: "23/04/2020"
 output: jekyllthat::jekylldown
+image: "https://clarewest.github.io/blog/assets/img/intro-to-r-packages_summary.png"
 summary: "Overview of how usethis can help you create, develop, document and test R packages and projects"
 categories: R packages
 ---
